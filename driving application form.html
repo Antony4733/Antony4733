@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driving School Application Form</title>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.x/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function () {
+      emailjs.init('mailto://mutethiaantony715@gmail.com');
+    })();
+  </script>
+  <style>
+     html {  
+  background-image: url("https://i.ytimg.com/vi/eZBLZ4o_9_A/maxresdefault.jpg");
+  background-size: cover; 
+  background-repeat: no-repeat;
+background-attachment: fixed;
+}
+    .form-container {
+      width: 300px;
+      margin: 50px auto;
+      text-align: center;
+      padding: 16px;
+      border: 1px solid #8ef7c6;
+      border-radius: 10px;
+    }
+    .form-container input, .form-container textarea, .form-container button, .form-container input[type="file"] {
+      width: 100%;
+      display: block;
+      margin: 10px 0;
+    }
+    .form-container input, .form-container textarea, .form-container input[type="file"] {
+      height: 35px;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #0d0f0ff3;
+    }
+    .form-container button {
+      background-color: #0d0f0ff3;
+      color: rgb(34, 163, 223);
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    html{
+      background-color: rgb(203, 247, 132);
+    }
+    .form-container button:hover {
+      background-color: #6c6b6e09;
+    }
+    #message-container {
+      display: none;
+    }
+    a{
+        text-decoration: none;
+    }
+    #name,#email,#phone,#address,#dob{
+        background-color: rgb(131, 208, 243);
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <form id="application-form" method="POST" enctype="multipart/form-data"  action="mutethiaantony715@gm1il.com">
+      <label for="name">Name:</label>
+      <input type="text" id="name" name="name" placeholder="John Doe" required />
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="johndoe@example.com" required />
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" placeholder="(123) 456-7890" required />
+      <label for="address">Address:</label>
+      <textarea id="address" name="address" placeholder="123 Main Street" required></textarea>
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" required />
+      <input type="file" id="file" name="file" placeholder="Your Id" />
+      <a href="C:\Users\LENOVO\Desktop\py, sql,jhc\courses.html"><button type="button" id="submit-btn">Submit Application</button></a>
+    </form>
+  </div>
+  <div id="message-container">
+    <p id="message-text"></p>
+  </div>
+  <script>
+    (function () {
+      const form = document.querySelector('#application-form');
+      const name = document.querySelector('#name');
+      const email = document.querySelector('#email');
+      const phone = document.querySelector('#phone');
+      const address = document.querySelector('#address');
+      const dob = document.querySelector('#dob');
+      const file = document.querySelector('#file');
+      const messageText = document.querySelector('#message-text');})
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        if (
+          name.value === '' ||
+          email.value === '' ||
+          phone.value === '' ||
+          address.value === '' ||
+          dob.value === '' ||
+          file .files.length === 0  
+          ) {
+          showMessage('Please fill out all fields.', 'error');
+          return;
+        }
+        
+        // Check that the email is valid
+     
+
+        // Create a FormData object to send our data with
+        let formData = new FormData();
+        formData.append('name', name.value);
+        formData.append('email', email.value);
+        formData.append('phone', phone.value);
+        formData.append('address', address.value);
+        formData.append('dob', dob.value);
+        formData.append('image', file.files[0]);
+
+        fetch('/api/applications',   {method: 'POST' , body :formData})
+            .then((response) => response.json())
+              .catch((err) => console.log(err));
+            
+        // Show success message and clear field values
+        showMessage('Your application has been submitted successfully!','success')
+        name.value= '';
+        email.value= '';
+        phone.value= '';
+        address.value='';   
+        dob.value= '';      
+    });     </script></body></html>
